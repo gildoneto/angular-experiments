@@ -1,1 +1,47 @@
-<p>form-consulta works!</p>
+<form>
+  <div class="container-fluid">
+    <label for="automovel" class="col-sm-2 control-label"
+      >Tipo de veículo</label
+    >
+    <select
+      class="form-select"
+      aria-label="Default select example"
+      id="automovel"
+      #marca
+      (change)="getAllMarcas(marca.value)"
+    >
+      <option selected>Escolha o tipo de automóvel</option>
+      <option value="carros">Carros</option>
+      <option value="motos">Motos</option>
+      <option value="caminhoes">Caminhões</option>
+    </select>
+
+    <label for="marca" class="col-sm-2 control-label">Marca</label>
+    <select class="form-select" aria-label="Default select example" id="marca">
+      <option selected>Escolha a marca</option>
+      <option *ngFor="let marca of marcas" [value]="marca.codigo">{{ marca.nome }}</option>
+    </select>
+<!--
+    <label for="modelo" class="col-sm-2 control-label">Modelo</label>
+    <select class="form-select" aria-label="Default select example" id="modelo">
+      <option selected>Escolha o modelo</option>
+    </select>
+
+    <label for="ano" class="col-sm-2 control-label">Ano</label>
+    <select class="form-select" aria-label="Default select example" id="ano">
+      <option selected>Escolha o ano</option>
+    </select>
+    <div class="input-group mb-3">
+      <span class="input-group-text">R$</span>
+      <input
+        type="number"
+        class="form-control"
+        aria-label="Valor em reais"
+        id="inputUsuario"
+      />
+    </div> -->
+  </div>
+  <button type="button" class="btn btn-success" id="btn_consultar">
+    CONSULTAR
+  </button>
+</form>
