@@ -7,8 +7,8 @@
       class="form-select"
       aria-label="Default select example"
       id="automovel"
-      #marca
-      (change)="getAllMarcas(marca.value)"
+      #automovel
+      (change)="getAllMarcas(automovel.value)"
     >
       <option selected>Escolha o tipo de automóvel</option>
       <option value="carros">Carros</option>
@@ -17,20 +17,35 @@
     </select>
 
     <label for="marca" class="col-sm-2 control-label">Marca</label>
-    <select class="form-select" aria-label="Default select example" id="marca">
+    <select
+      class="form-select"
+      aria-label="Default select example"
+      id="marca"
+      #marca
+      (change)="getModelosEAnos(marca.value)"
+    >
       <option selected>Escolha a marca</option>
       <option *ngFor="let marca of marcas" [value]="marca.codigo">{{ marca.nome }}</option>
     </select>
-<!--
+
     <label for="modelo" class="col-sm-2 control-label">Modelo</label>
-    <select class="form-select" aria-label="Default select example" id="modelo">
+    <select
+      class="form-select"
+      aria-label="Escolha o modelo"
+      id="modelo"
+    >
       <option selected>Escolha o modelo</option>
+      <option *ngFor="let modelo of modelos" [value]="modelo.codigo">{{ modelo.nome }}</option>
     </select>
 
     <label for="ano" class="col-sm-2 control-label">Ano</label>
-    <select class="form-select" aria-label="Default select example" id="ano">
+    <select class="form-select" aria-label="Escolha o Ano" id="ano">
       <option selected>Escolha o ano</option>
+      <option *ngFor="let ano of anos" [value]="ano.codigo">{{ ano.nome }}</option>
+
     </select>
+
+    <!--
     <div class="input-group mb-3">
       <span class="input-group-text">R$</span>
       <input
