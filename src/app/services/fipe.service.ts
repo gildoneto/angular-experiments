@@ -12,7 +12,7 @@ export class FipeService {
   constructor(private http: HttpClient) { }
 
   getMarcas(tipoVeiculo: string): Observable<Marca[]> {
-    return this.http.get<Marca[]>(`${this.baseUrl}/${tipoVeiculo}/marcas`);
-
+     // return this.http.get<Marca[]>(`${this.baseUrl}/${tipoVeiculo}/marcas`); // API
+    return this.http.get<Marca[]>(`../../assets/JSON/${tipoVeiculo}/marcas.json`); // JSON local
   }
 }
