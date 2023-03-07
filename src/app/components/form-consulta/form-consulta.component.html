@@ -8,7 +8,7 @@
       aria-label="Default select example"
       id="automovel"
       #automovel
-      (change)="getAllMarcas(automovel.value)"
+      (change)="getFipeMarcas(automovel.value)"
     >
       <option selected>Escolha o tipo de automóvel</option>
       <option value="carros">Carros</option>
@@ -22,10 +22,12 @@
       aria-label="Default select example"
       id="marca"
       #marca
-      (change)="getModelosEAnos(marca.value)"
+      (change)="getFipeModelos(marca.value)"
     >
       <option selected>Escolha a marca</option>
-      <option *ngFor="let marca of marcas" [value]="marca.codigo">{{ marca.nome }}</option>
+      <option *ngFor="let marca of marcas" [value]="marca.codigo">
+        {{ marca.nome }}
+      </option>
     </select>
 
     <label for="modelo" class="col-sm-2 control-label">Modelo</label>
@@ -33,16 +35,27 @@
       class="form-select"
       aria-label="Escolha o modelo"
       id="modelo"
+      #modelo
+      (change)="getFipeAnos(modelo.value)"
     >
       <option selected>Escolha o modelo</option>
-      <option *ngFor="let modelo of modelos" [value]="modelo.codigo">{{ modelo.nome }}</option>
+      <option *ngFor="let modelo of modelos" [value]="modelo.codigo">
+        {{ modelo.nome }}
+      </option>
     </select>
 
     <label for="ano" class="col-sm-2 control-label">Ano</label>
-    <select class="form-select" aria-label="Escolha o Ano" id="ano">
+    <select
+      class="form-select"
+      aria-label="Escolha o Ano"
+      id="ano"
+      #ano
+      (change)="setAno(ano.value)"
+    >
       <option selected>Escolha o ano</option>
-      <option *ngFor="let ano of anos" [value]="ano.codigo">{{ ano.nome }}</option>
-
+      <option *ngFor="let ano of anos" [value]="ano.codigo">
+        {{ ano.nome }}
+      </option>
     </select>
 
     <!--
@@ -56,7 +69,12 @@
       />
     </div> -->
   </div>
-  <button type="button" class="btn btn-success" id="btn_consultar">
+  <button
+    type="button"
+    class="btn btn-success"
+    id="btn_consultar"
+    (click)="getFipeAutomovel()"
+  >
     CONSULTAR
   </button>
 </form>

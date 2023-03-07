@@ -19,18 +19,16 @@ export class FipeService {
     return this.http.get<Marca[]>(`${this.baseUrl}${tipoAutomovel}/marcas`);
   }
 
-  getModelosEAnos(tipoAutomovel: string, codigoMarca: string): Observable<ModelosAnos> {
-    console.log(tipoAutomovel, codigoMarca);
+  getModelos(tipoAutomovel: string, codigoMarca: string): Observable<ModelosAnos> {
     const modelosAnos = this.http.get<ModelosAnos>(`${this.baseUrl}${tipoAutomovel}/marcas/${codigoMarca}/modelos`);
-    // modelos.subscribe((modelos) => console.log(modelos));
     return modelosAnos;
   }
 
-  // getAnos(tipoAutomovel: string, codigoMarca: string, codigoModelo: string): Observable<Ano[]> {
-  //   return this.http.get<Ano[]>(`${this.baseUrl}${tipoAutomovel}/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`);
-  // }
+  getAnos(tipoAutomovel: string, codigoMarca: string, codigoModelo: string): Observable<Ano[]> {
+    return this.http.get<Ano[]>(`${this.baseUrl}${tipoAutomovel}/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`);
+  }
 
-  getFipe(tipoAutomovel: string, codigoMarca: string, codigoModelo: string, codigoAno: string): Observable<Fipe> {
+  getTabelaFipe(tipoAutomovel: string, codigoMarca: string, codigoModelo: string, codigoAno: string): Observable<Fipe> {
     return this.http.get<Fipe>(`${this.baseUrl}${tipoAutomovel}/marcas/${codigoMarca}/modelos/${codigoModelo}/anos/${codigoAno}`);
   }
 }
