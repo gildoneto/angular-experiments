@@ -11,6 +11,49 @@ import { Fipe } from 'src/app/interfaces/Fipe';
   styleUrls: ['./form-consulta.component.css']
 })
 export class FormConsultaComponent implements OnInit{
+  FIPEMOCK = {
+    marcas: [
+      {
+        nome: "Marca Mock 1",
+        codigo: "1",
+      },
+      {
+        nome: "Marca Mock 2",
+        codigo: "2",
+      },
+    ],
+    modelos: [
+      {
+        nome: "Modelo Mock 1",
+        codigo: "1111",
+      },
+      {
+        nome: "Modelo Mock 2",
+        codigo: "2222",
+      },
+    ],
+    anos: [
+      {
+        nome: "Ano Mock 1",
+        codigo: "2023-1",
+      },
+      {
+        nome: "Ano Mock 2",
+        codigo: "2023-2",
+      }
+    ],
+    fipeAutomovel: {
+        Valor: "R$ 100.000,00",
+        Marca: "Marca Mock 1",
+        Modelo: "Modelo Mock 2",
+        AnoModelo: 2023,
+        Combustivel: "Diesel",
+        CodigoFipe: "005340-6",
+        MesReferencia: "janeiro de 2023 ",
+        TipoVeiculo: 1,
+        SiglaCombustivel: "Z"
+    },
+  };
   marcas: Marca[] = [];
   modelos: Modelo[] = [];
   anos: Ano[] = [];
@@ -34,22 +77,38 @@ export class FormConsultaComponent implements OnInit{
 
   ngOnInit(): void {}
 
+  getMocks(): void {
+    this.marcas = this.FIPEMOCK.marcas;
+    this.modelos = this.FIPEMOCK.modelos;
+    this.anos = this.FIPEMOCK.anos;
+    this.fipeAutomovel = this.FIPEMOCK.fipeAutomovel;
+  }
+
   getFipeMarcas(tipoAutomovel: string): void {
     this.selectedAutomovel = tipoAutomovel;
-    this.fipeService.getMarcas(this.selectedAutomovel).subscribe((marcas) => (this.marcas = marcas));
+    this.fipeService.getMarcas(this.selectedAutomovel).subscribe({
+      next: (marcas) => (this.marcas = marcas),
+      error: (error: Error) => {
+        console.log(error.name)
+        alert('API fora do ar. Os selects serão preenchidos com valores mockados');
+        this.getMocks();
+      }
+    });
   }
 
   getFipeModelos(codigoMarca: string): void {
     this.selectedMarca = codigoMarca;
-    this.fipeService.getModelos(this.selectedAutomovel, this.selectedMarca).subscribe((modelosAnos) => {
-      this.modelos = modelosAnos.modelos
+    this.fipeService.getModelos(this.selectedAutomovel, this.selectedMarca).subscribe({
+      next: (modelosAnos) =>  (this.modelos = modelosAnos.modelos),
+      error: () => {}
     });
   }
 
   getFipeAnos(codigoModelo: string): void {
     this.selectedModelo = codigoModelo;
-    this.fipeService.getAnos(this.selectedAutomovel, this.selectedMarca, this.selectedModelo).subscribe((anos) => {
-      this.anos = anos
+    this.fipeService.getAnos(this.selectedAutomovel, this.selectedMarca, this.selectedModelo).subscribe({
+      next: (anos) => ( this.anos = anos ),
+      error: () => {}
     });
   }
 
@@ -63,9 +122,12 @@ export class FormConsultaComponent implements OnInit{
       this.selectedMarca,
       this.selectedModelo,
       this.selectedAno
-    ).subscribe((tabelaFipe) => {
-      this.fipeAutomovel = tabelaFipe;
-      console.log(this.fipeAutomovel)
-    })
+    ).subscribe({
+      next: (tabelaFipe) => {
+        this.fipeAutomovel = tabelaFipe;
+        console.log(this.fipeAutomovel)
+      },
+      error: () => console.log(this.fipeAutomovel)
+  })
   }
 }
