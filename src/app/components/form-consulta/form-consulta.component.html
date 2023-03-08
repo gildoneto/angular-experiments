@@ -57,8 +57,6 @@
         {{ ano.nome }}
       </option>
     </select>
-
-    <!--
     <div class="input-group mb-3">
       <span class="input-group-text">R$</span>
       <input
@@ -66,8 +64,10 @@
         class="form-control"
         aria-label="Valor em reais"
         id="inputUsuario"
+        #inputUsuario
+        (input)="updateInput(inputUsuario.value)"
       />
-    </div> -->
+    </div>
   </div>
   <button
     type="button"
@@ -78,3 +78,9 @@
     CONSULTAR
   </button>
 </form>
+
+<div *ngIf="true">
+  <ul style="list-style-type:none;">
+    <li *ngFor="let prop of fipeAutomovel | keyvalue">{{prop.key}}: {{prop.value}}</li>
+  </ul>
+</div>

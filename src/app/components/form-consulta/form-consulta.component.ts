@@ -72,6 +72,7 @@ export class FormConsultaComponent implements OnInit{
   selectedMarca: string = '';
   selectedModelo: string = '';
   selectedAno: string = '';
+  valorDigitado: string = '';
 
   constructor(private fipeService: FipeService) {}
 
@@ -127,7 +128,36 @@ export class FormConsultaComponent implements OnInit{
         this.fipeAutomovel = tabelaFipe;
         console.log(this.fipeAutomovel)
       },
-      error: () => console.log(this.fipeAutomovel)
+      error: () => {
+        alert(this.fipeAutomovel.Valor);
+        alert(this.comparaFIPE(parseFloat(this.valorDigitado), this.stringToFloat(this.fipeAutomovel.Valor)));
+      }
   })
+  }
+
+  comparaFIPE(valorDigitado: number, valorFIPE: number): string {
+    const resultado = ((valorDigitado - valorFIPE) / valorFIPE) * 100;
+    if (resultado >= 10) {
+      return 'Valor do veículo acima da tabela FIPE';
+    } else if (resultado <= -10) {
+      return 'Valor do veículo abaixo da tabela FIPE';
+    } else {
+      return 'Valor do veículo na média da tabela FIPE';
+    }
+  }
+
+  updateInput(valorDigitado: string):void {
+    this.valorDigitado = valorDigitado;
+  }
+
+  stringToFloat(texto: string) {
+    // Remove o símbolo de moeda e a vírgula decimal
+    const valorNumerico = texto.replace(/[^\d]/g, '').replace(',', '');
+
+    // Adiciona a vírgula decimal duas posições antes do final
+    const valorComCentavos = valorNumerico.slice(0, -2) + '.' + valorNumerico.slice(-2);
+
+    // Converte a string resultante para um valor float
+    return parseFloat(valorComCentavos);
   }
 }
